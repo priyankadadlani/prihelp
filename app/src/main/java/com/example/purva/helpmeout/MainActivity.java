@@ -239,4 +239,12 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public double mLat() {
+        return gps.getLatitude();
+    }
+
+    public double mLong() {
+        return gps.getLongitude();
+    }
 }

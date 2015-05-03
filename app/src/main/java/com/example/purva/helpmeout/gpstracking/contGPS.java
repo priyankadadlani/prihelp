@@ -35,6 +35,7 @@ public class contGPS extends Service implements LocationListener {
     double latitude; // latitude
     double longitude; // longitude
     private connectNetwork con;
+    private GPSTracker gps;
     private SharedPreferences sharedpreferences;
     private MainActivity activity;
 
@@ -52,7 +53,10 @@ public class contGPS extends Service implements LocationListener {
         System.out.println("hi\n\n\n\n\n\n\n\n\n constructor called contgps!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         activity=act;
         getLocation();
-        activity.sendData(latitude,longitude);
+        gps = new GPSTracker(context);
+        latitude = activity.mLat();
+        longitude = activity.mLong();
+        activity.sendData(latitude, longitude);
     }
 
     public Location getLocation() {
