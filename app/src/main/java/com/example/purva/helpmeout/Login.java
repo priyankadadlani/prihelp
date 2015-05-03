@@ -69,6 +69,7 @@ public class Login extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 JSONObject logObj = new JSONObject();
+                userid=et1.getText().toString();
                 try {
                     logObj.put("type","login");
                     logObj.put("uid", et1.getText().toString());
@@ -90,14 +91,12 @@ public class Login extends ActionBarActivity {
     }
     void print(String login)
     {
-        System.out.println("\n\n\n********fdgfdddd*****"+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n");
-        Toast.makeText(getApplicationContext(),login,Toast.LENGTH_SHORT).show();
         try {
             JSONObject loginV = new JSONObject(login);
            //t1.setText(ackUID.getString("ack"));
             if(loginV.getInt("success")==0)
             {
-                editor.putString("uid", et1.getText().toString());
+                editor.putLong("uid", Long.parseLong(userid));
                 editor.putString("password",et1.getText().toString());
                 editor.putInt("id", id);
                 editor.putInt("type", loginV.getInt("success"));

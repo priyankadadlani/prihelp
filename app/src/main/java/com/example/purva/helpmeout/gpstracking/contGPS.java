@@ -42,14 +42,14 @@ public class contGPS extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 50 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 15 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 2; // 15 minute
     protected LocationManager locationManager;
 
     public contGPS(Context context,MainActivity act)
     {
         this.mContext = context;
-        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(mContext);//getSharedPreferences("UserData",0);
-        System.out.println("hi\n\n\n\n\n\n\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(mContext);//getSharedPreferences("UserData",0);
+        System.out.println("hi\n\n\n\n\n\n\n\n\n constructor called contgps!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         activity=act;
         getLocation();
         activity.sendData(latitude,longitude);

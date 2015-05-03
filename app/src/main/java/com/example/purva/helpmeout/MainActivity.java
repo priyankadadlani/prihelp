@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
     private LocationManager locationManager;
     public int flag;
     private GPSTracker gps;
-    int tempuid=123456;
+    //int tempuid=123456;
     private boolean gps_enabled = false;
     private boolean network_enabled = false;
     private MenuItem item;
@@ -56,12 +56,14 @@ public class MainActivity extends ActionBarActivity {
         //sharedpreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedpreferences.edit();
-        if(sharedpreferences.getString("uid",null)==null)
+        if(sharedpreferences.getLong("uid",0)==0)
         {
             Toast.makeText(getApplicationContext(),"Please login first!!! Redirecting you to login page", Toast.LENGTH_LONG).show();
+            System.out.println("******************************8entering to login page********************");
             Intent i1 = new Intent(MainActivity.this,Login.class);
             startActivity(i1);
         }
+       System.out.println("\n\ncrossed it.. enterinf to gpg on 1");
         contGps = new contGPS(this,mainActivity);
         b1 = (Button) findViewById(R.id.help_button);
         b1.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
                         JSONObject locationHelp = new JSONObject();
                         try
                         {
-                            locationHelp.put("uid",tempuid);
+                            locationHelp.put("uid",sharedpreferences.getLong("uid",0));
 
                             locationHelp.put("type", "help");
                             locationHelp.put("latitude",latitude);
@@ -124,8 +126,11 @@ public class MainActivity extends ActionBarActivity {
                     JSONObject stop = new JSONObject();
                     try
                     {
-                        stop.put("uid", tempuid);
+                        stop.put("uid", sharedpreferences.getLong("uid",0));
                         stop.put("type", "stop");
+                        stop.put("latitude",sharedpreferences.getString("latitude","0.0"));
+                        stop.put("longitude",sharedpreferences.getString("longitude","0.0"));
+                        stop.put("id",sharedpreferences.getInt("id",-1));
                         new connectNetwork(mainActivity).execute(stop.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -153,8 +158,8 @@ public class MainActivity extends ActionBarActivity {
                         int ackNo=Integer.parseInt(ack);
                         JSONObject obj = new JSONObject();
                         try {
-                            obj.put("UID", tempuid);
-                            obj.put("Acknowledgement No.", ackNo);
+                            obj.put("uid", sharedpreferences.getLong("uid",0));
+                            obj.put("ack", ackNo);
                             new connectNetwork(mainActivity).execute(obj.toString());
                         }
                         catch(JSONException e)
@@ -176,7 +181,7 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(),ack,Toast.LENGTH_SHORT).show();
         try {
             JSONObject ackUID = new JSONObject(ack);
-            System.out.println("\n\n\n*****"+"\n\n\n\n******");
+            System.out.println("\n\n\n print fn   *****"+"\n\n\n\n******");
             t1.setText(ackUID.getLong("ack")+"");
         }
         catch (JSONException e)
@@ -188,14 +193,12 @@ public class MainActivity extends ActionBarActivity {
     }
     public void sendData(double latitude, double longitude)
     {
-        if(contGps.canGetLocation())
-        {
+        System.out.print("fgdfgfd entered into send data \n\n7777777777777777777777777777");
             JSONObject location = new JSONObject();
             try
             {
-
-                location.put("uid",sharedpreferences.getString("uid",null));
-                location.put("id",sharedpreferences.getInt("id",6));
+                location.put("uid",sharedpreferences.getLong("uid",0));
+                location.put("id",sharedpreferences.getInt("id",-1));
                 location.put("type", "location");
                 location.put("latitude",latitude);
                 location.put("longitude",longitude);
@@ -207,11 +210,6 @@ public class MainActivity extends ActionBarActivity {
             {
                 e.printStackTrace();
             }
-        }
-        else
-        {
-            contGps.showSettingsAlert();
-        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
