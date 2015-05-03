@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends ActionBarActivity {
-    connectNetwork connect;
+    private connectNetwork connect;
     private Button bt1;
     private EditText et1;
     private EditText et2;
@@ -94,15 +94,15 @@ public class Login extends ActionBarActivity {
         Toast.makeText(getApplicationContext(),login,Toast.LENGTH_SHORT).show();
         try {
             JSONObject loginV = new JSONObject(login);
-            System.out.print("\n\n\n*************"+loginV.toString()+"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n");
-            //t1.setText(ackUID.getString("ack"));
-            if(loginV.getInt("success")==1)
+           //t1.setText(ackUID.getString("ack"));
+            if(loginV.getInt("success")==0)
             {
-                editor.putString("uid",userid);
-                editor.putString("password",pswd);
-                editor.putInt("id",id);
-                editor.putInt("type",loginV.getInt("type"));
+                editor.putString("uid", et1.getText().toString());
+                editor.putString("password",et1.getText().toString());
+                editor.putInt("id", id);
+                editor.putInt("type", loginV.getInt("success"));
                 editor.commit();
+
                 Intent i2 = new Intent(Login.this,MainActivity.class);
                 startActivity(i2);
             }

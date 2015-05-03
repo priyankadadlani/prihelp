@@ -176,7 +176,8 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(),ack,Toast.LENGTH_SHORT).show();
         try {
             JSONObject ackUID = new JSONObject(ack);
-            t1.setText(ackUID.getString("ack"));
+            System.out.println("\n\n\n*****"+"\n\n\n\n******");
+            t1.setText(ackUID.getLong("ack")+"");
         }
         catch (JSONException e)
         {

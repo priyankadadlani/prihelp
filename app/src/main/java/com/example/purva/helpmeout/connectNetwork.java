@@ -40,6 +40,7 @@ public class connectNetwork extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... dataA) {
         DataInputStream in = null;
         StringBuffer sb = null;
+        String dark=null;
         String serverName = "10.42.0.1";
         int port = 6069;
         try {
@@ -56,19 +57,21 @@ public class connectNetwork extends AsyncTask<String, Void, String> {
             InputStream inFromServer = client.getInputStream();
             in =
                     new DataInputStream(inFromServer);
-            BufferedReader in1 = new BufferedReader(new InputStreamReader(in));
+            /*BufferedReader in1 = new BufferedReader(new InputStreamReader(in));
             sb = new StringBuffer();
             String s="";
             while((s=in1.readLine())!=null)
             {
                 sb.append(s);
-            }
-            System.out.println("Server says " + in.readUTF());
+            }*/
+            dark =in.readUTF();
+            System.out.println("Server says " + dark);
             client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return sb.toString();
+        System.out.println(dark);
+        return dark;
     }
     protected void onPostExecute(String result)
     {
