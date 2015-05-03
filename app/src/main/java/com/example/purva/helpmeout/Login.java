@@ -93,6 +93,7 @@ public class Login extends ActionBarActivity {
     {
         try {
             JSONObject loginV = new JSONObject(login);
+            System.out.println("*************************yoyoyoyoyooyyo*****************************");
            //t1.setText(ackUID.getString("ack"));
             if(loginV.getInt("success")==0)
             {
@@ -103,6 +104,7 @@ public class Login extends ActionBarActivity {
                 editor.commit();
 
                 Intent i2 = new Intent(Login.this,MainActivity.class);
+                //i2.putExtra("type",loginV.getInt("success"));
                 startActivity(i2);
             }
             else

@@ -30,13 +30,16 @@ public class connectNetwork extends AsyncTask<String, Void, String> {
         flag=0;
         this.activity=act;
     }
-    public connectNetwork(){}
+    public connectNetwork(){flag=3;}
     public connectNetwork(Login act)
     {
         this.NActivity = act;
         flag=1;
     }
-
+//    public  connectNetwork(MainActivity act, int a)
+//    {
+//        flag=3;
+//    }
     protected String doInBackground(String... dataA) {
         DataInputStream in = null;
         StringBuffer sb = null;
@@ -83,6 +86,7 @@ public class connectNetwork extends AsyncTask<String, Void, String> {
         {
             NActivity.print(result);
         }
+
     }
 
 }

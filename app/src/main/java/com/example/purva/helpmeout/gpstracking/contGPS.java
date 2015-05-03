@@ -39,10 +39,10 @@ public class contGPS extends Service implements LocationListener {
     private MainActivity activity;
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 50 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 50 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 2; // 15 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 1; // 15 minute
     protected LocationManager locationManager;
 
     public contGPS(Context context,MainActivity act)
@@ -72,15 +72,15 @@ public class contGPS extends Service implements LocationListener {
                 if (isNetworkEnabled)
                 {
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d("Network", "Network");
-                    if (locationManager != null)
-                    {
+//                    Log.d("Network", "Network");
+//                    if (locationManager != null)
+//                    {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                         }
-                    }
+//                    }
                 }
                 if (isGPSEnabled)
                 {
@@ -90,18 +90,20 @@ public class contGPS extends Service implements LocationListener {
                                 LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("GPS Enabled", "GPS Enabled");
-                        if (locationManager != null) {
-                            location = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                            }
-                        }
+//                        Log.d("GPS Enabled", "GPS Enabled");
+//                        if (locationManager != null) {
+//                            location = locationManager
+//                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                            if (location != null) {
+//                                latitude = location.getLatitude();
+//                                longitude = location.getLongitude();
+//                            }
+//                        }
                     }
                 }
             }
+//            locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES,this);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,6 +157,8 @@ public class contGPS extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        latitude=location.getLatitude();
+        longitude=location.getLongitude();
         new contGPS(this,activity);
     }
 
@@ -192,7 +196,6 @@ public class contGPS extends Service implements LocationListener {
                 location.put("longitude",longitude);
                 con = new connectNetwork();
                 con.execute(location.toString());
-                Toast.makeText(mContext, "Sending location: latitude:" + latitude + ", longitude" + longitude , Toast.LENGTH_LONG).show();
             }
             catch (Exception e)
             {

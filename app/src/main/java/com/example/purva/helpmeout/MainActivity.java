@@ -50,13 +50,14 @@ public class MainActivity extends ActionBarActivity {
         final String MyPREF = "sharedPrefs" ;
         gps = new GPSTracker(this);
 
+       //int data = getIntent().getExtras().getInt("type");
 
         mainActivity = this;
         flag=0;
         //sharedpreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE);
        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedpreferences.edit();
-        if(sharedpreferences.getLong("uid",0)==0)
+        if(sharedpreferences.contains("uid")==false)
         {
             Toast.makeText(getApplicationContext(),"Please login first!!! Redirecting you to login page", Toast.LENGTH_LONG).show();
             System.out.println("******************************8entering to login page********************");
@@ -90,6 +91,7 @@ public class MainActivity extends ActionBarActivity {
                         JSONObject locationHelp = new JSONObject();
                         try
                         {
+                            System.out.print("*********INSIDE MAIN BUTTON ON LONG HELP\n\n");
                             locationHelp.put("uid",sharedpreferences.getLong("uid",0));
 
                             locationHelp.put("type", "help");
@@ -142,6 +144,10 @@ public class MainActivity extends ActionBarActivity {
         });
 
         t1= (EditText) findViewById(R.id.ackNum);
+//       if(data==5)
+//       {
+//           t1.setVisibility(View.INVISIBLE);
+//       }
         t1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -203,6 +209,7 @@ public class MainActivity extends ActionBarActivity {
                 location.put("latitude",latitude);
                 location.put("longitude",longitude);
                 con = new connectNetwork();
+                System.out.println("\n\n\n\n*********SENT BY CONTGPS******\n\n\n\n\n");
                 con.execute(location.toString());
                 Toast.makeText(getApplicationContext(), "Sending location: latitude:" + latitude + ", longitude" + longitude , Toast.LENGTH_LONG).show();
             }
