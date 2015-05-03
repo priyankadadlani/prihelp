@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
             Intent i1 = new Intent(MainActivity.this,Login.class);
             startActivity(i1);
         }
-        contGps = new contGPS(this);
+        contGps = new contGPS(this,mainActivity);
         b1 = (Button) findViewById(R.id.help_button);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +185,33 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(),"error in receiving json object",Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void sendData(double latitude, double longitude)
+    {
+        if(contGps.canGetLocation())
+        {
+            JSONObject location = new JSONObject();
+            try
+            {
+
+                location.put("uid",sharedpreferences.getString("uid",null));
+                location.put("id",sharedpreferences.getInt("id",6));
+                location.put("type", "location");
+                location.put("latitude",latitude);
+                location.put("longitude",longitude);
+                con = new connectNetwork();
+                con.execute(location.toString());
+                Toast.makeText(getApplicationContext(), "Sending location: latitude:" + latitude + ", longitude" + longitude , Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            contGps.showSettingsAlert();
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -36,6 +36,7 @@ public class contGPS extends Service implements LocationListener {
     double longitude; // longitude
     private connectNetwork con;
     private SharedPreferences sharedpreferences;
+    private MainActivity activity;
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 50 meters
@@ -44,14 +45,14 @@ public class contGPS extends Service implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 15 minute
     protected LocationManager locationManager;
 
-    public contGPS(Context context)
+    public contGPS(Context context,MainActivity act)
     {
         this.mContext = context;
         sharedpreferences = PreferenceManager.getDefaultSharedPreferences(mContext);//getSharedPreferences("UserData",0);
         System.out.println("hi\n\n\n\n\n\n\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
+        activity=act;
         getLocation();
-        sendData();
+        activity.sendData(latitude,longitude);
     }
 
     public Location getLocation() {
@@ -154,7 +155,7 @@ public class contGPS extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        new contGPS(this);
+        new contGPS(this,activity);
     }
 
     @Override
