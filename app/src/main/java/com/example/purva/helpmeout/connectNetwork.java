@@ -73,7 +73,7 @@ public class connectNetwork extends AsyncTask<String, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(dark);
+        //System.out.println(dark);
         return dark;
     }
     protected void onPostExecute(String result)

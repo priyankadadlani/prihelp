@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         editor = sharedpreferences.edit();
         if(sharedpreferences.contains("uid")==false)
         {
-            Toast.makeText(getApplicationContext(),"Please login first!!! Redirecting you to login page", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(),"Please login first!!! Redirecting you to login page", Toast.LENGTH_LONG).show();
             System.out.println("******************************8entering to login page********************");
             Intent i1 = new Intent(MainActivity.this,Login.class);
             startActivity(i1);
